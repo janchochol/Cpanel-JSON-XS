@@ -2081,6 +2081,11 @@ encode_sv (pTHX_ enc_t *enc, SV *sv, SV *typesv)
           encode_const_str (aTHX_ enc, "false", 5, 0);
           encode_ch (aTHX_ enc, '"');
         }
+      else if (UNLIKELY (!SvOK(sv)))
+        {
+          encode_ch (aTHX_ enc, '"');
+          encode_ch (aTHX_ enc, '"');
+        }
       else if (!UNLIKELY (SvROK(sv) && SvOBJECT (SvRV(sv))) || !encode_bool_obj (aTHX_ enc, SvRV(sv), 0, 1))
         {
           char *str;
